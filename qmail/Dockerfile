@@ -114,7 +114,7 @@ RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	mkdir -p /root/.ssh && \
 	touch /root/.ssh/authorized_keys2/authorized_keys2 && \
 	cat /tmp/tmp.key >> /root/.ssh/authorized_keys2 && \
-	rm /tmp/tmp.key && \
+	rm /tmp/tmp.key 
 
 EXPOSE 25 22
 
