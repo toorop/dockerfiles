@@ -25,7 +25,7 @@ RUN mkdir -p /package && \
 
 # ucspi-tcp
 RUN cd /usr/local/src && \
-	wget ucspi-tcp-0.88.tar.gz && \
+	wget http://cr.yp.to/ucspi-tcp/ucspi-tcp-0.88.tar.gz && \
 	gunzip ucspi-tcp-0.88.tar && \
     tar -xf ucspi-tcp-0.88.tar && \
     cd ucspi-tcp-0.88 
