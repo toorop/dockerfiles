@@ -101,7 +101,7 @@ RUN ln -s /var/qmail/bin/sendmail /usr/lib
 RUN ln -s /var/qmail/bin/sendmail /usr/sbin
 
 # Link to svscan
-RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /etc/service
+RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
 
 EXPOSE 25
 
