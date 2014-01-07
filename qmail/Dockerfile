@@ -9,7 +9,7 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get install -y ucspi-tcp daemontools daemontools-run wget
+RUN apt-get install -y ucspi-tcp daemontools daemontools-run wget gunzip  build-essential
 
 # Get qmail src
 RUN cd /usr/local/src/
@@ -21,7 +21,7 @@ RUN tar xpf netqmail-1.06.tar
 RUN mkdir -p /var/qmail
 
 # Add user
-groupadd nofiles
+RUN groupadd nofiles
 RUN useradd -g nofiles -d /var/qmail/alias alias
 RUN useradd -g nofiles -d /var/qmail qmaild
 RUN useradd -g nofiles -d /var/qmail qmaill
