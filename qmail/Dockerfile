@@ -9,7 +9,7 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get install -y ucspi-tcp wget build-essentials
+RUN apt-get install -y wget build-essential
 
 # daemontools
 RUN mkdir -p /package
@@ -22,6 +22,7 @@ RUN rm -f daemontools-0.76.tar
 RUN cd admin/daemontools-0.76
 RUN package/install
 
+# ucspi-tcp
 
 
 # Get qmail src
