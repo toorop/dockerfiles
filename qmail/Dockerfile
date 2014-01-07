@@ -36,7 +36,9 @@ RUN cd /usr/local/src && \
 	wget http://cr.yp.to/ucspi-tcp/ucspi-tcp-0.88.tar.gz && \
 	gunzip ucspi-tcp-0.88.tar && \
     tar -xf ucspi-tcp-0.88.tar && \
-    cd ucspi-tcp-0.88 
+    cd ucspi-tcp-0.88 && \
+    make && \
+    make setup check 
 
 
 # Get qmail src
@@ -99,6 +101,7 @@ RUN mkdir -p /var/log/qmail/qmail-smtpd && \
 # control
 RUN echo 20 > /var/qmail/control/concurrencyincoming
 RUN chmod 644 /var/qmail/control/concurrencyincoming
+RUN cat /etc/hostname >> /var/qmail/control/me
 
 # RELAYCLIENT
 RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp && \
@@ -120,7 +123,8 @@ RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	rm /tmp/tmp.key 
 
 # Start
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/start.sh -O /root/start.sh
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/start.sh -O /root/start.sh && \
+	chmod +x /root/start.sh
 
 EXPOSE 25 22
 
