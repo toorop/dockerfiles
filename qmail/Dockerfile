@@ -20,7 +20,7 @@ RUN gunzip daemontools-0.76.tar
 RUN tar -xpf daemontools-0.76.tar
 RUN rm -f daemontools-0.76.tar
 RUN cd admin/daemontools-0.76
-RUN sed 's/write-strings/write-strings -include \/usr\/include\/errno.h/g' src/conf-cc > /tmp/conf-cc && mv /tmp/conf-cc src/conf-cc
+RUN sed 's/write-strings/write-strings -include \/usr\/include\/errno.h/g' package/src/conf-cc > /tmp/conf-cc && mv /tmp/conf-cc package/src/conf-cc
 RUN package/install
 
 # ucspi-tcp
