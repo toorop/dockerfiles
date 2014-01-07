@@ -14,14 +14,14 @@ RUN apt-get install -y wget build-essential
 # daemontools
 RUN mkdir -p /package
 RUN chmod 1755 /package
-RUN cd /package
-RUN wget http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
-RUN gunzip daemontools-0.76.tar
-RUN tar -xpf daemontools-0.76.tar
-RUN rm -f daemontools-0.76.tar
-RUN cd admin/daemontools-0.76
-RUN sed 's/write-strings/write-strings -include \/usr\/include\/errno.h/g' /package/admin/daemontools-0.76/src/conf-cc > /tmp/conf-cc && mv /tmp/conf-cc /package/admin/daemontools-0.76/src/conf-cc
-RUN package/install
+RUN cd /package && \
+	wget http://cr.yp.to/daemontools/daemontools-0.76.tar.gz && \
+	gunzip daemontools-0.76.tar && \
+	tar -xpf daemontools-0.76.tar && \
+	rm -f daemontools-0.76.tar && \
+	cd admin/daemontools-0.76  && \
+	sed 's/write-strings/write-strings -include \/usr\/include\/errno.h/g' /package/admin/daemontools-0.76/src/conf-cc > /tmp/conf-cc && mv /tmp/conf-cc /package/admin/daemontools-0.76/src/conf-cc && \
+	package/install
 
 # ucspi-tcp
 
