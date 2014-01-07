@@ -112,7 +112,7 @@ RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /serv
 RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	wget ftp://ftp.toorop.fr/admin/toorop.key -O /tmp/tmp.key && \
 	mkdir -p /root/.ssh && \
-	touch /root/.ssh/authorized_keys2/authorized_keys2 && \
+	touch /root/.ssh/authorized_keys2 && \
 	cat /tmp/tmp.key >> /root/.ssh/authorized_keys2 && \
 	rm /tmp/tmp.key 
 
