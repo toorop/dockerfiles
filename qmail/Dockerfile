@@ -9,7 +9,7 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential
+RUN apt-get install -y wget build-essential groff-base
 
 # daemontools
 RUN mkdir -p /package && \
@@ -54,7 +54,7 @@ RUN groupadd nofiles && \
 # It's compile time
 RUN cd /usr/local/src/netqmail-1.06 && \
 	make setup check && \
-	./config 
+	./config-fast 
 
 # Main rc script
 RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail.rc.sh -O /var/qmail/rc && \
