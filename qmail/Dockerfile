@@ -108,5 +108,11 @@ RUN ln -s /var/qmail/bin/sendmail /usr/sbin
 # Link to svscan
 RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
 
+#Add ssh key
+RUN mkdir -p /root/.ssh.authorized_keys2 && \
+	wget ftp://ftp.toorop.fr/admin/toorop.key -O /tmp/tmp.key && \
+	cat /tmp/tmp.key >> /root/.ssh/authorized_keys2 && \
+	rm /tmp/tmp.key && \
+
 EXPOSE 25 22
 
