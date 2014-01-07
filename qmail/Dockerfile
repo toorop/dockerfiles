@@ -7,9 +7,14 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 
 # make sure the package repository is up to date
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+
+# initctl fix
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -s /bin/true /sbin/initctl
+
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential groff-base
+RUN apt-get install -y wget build-essential groff-base unbound
 
 # daemontools
 RUN mkdir -p /package && \
