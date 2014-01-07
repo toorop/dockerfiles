@@ -28,14 +28,14 @@ RUN cd /usr/local/src && \
 	wget ucspi-tcp-0.88.tar.gz && \
 	gunzip ucspi-tcp-0.88.tar && \
     tar -xf ucspi-tcp-0.88.tar && \
-    cd ucspi-tcp-0.88 && \
+    cd ucspi-tcp-0.88 
 
 
 # Get qmail src
 RUN cd /usr/local/src/ && \
 	wget http://www.qmail.org/netqmail-1.06.tar.gz && \
 	gunzip netqmail-1.06.tar.gz && \
-	tar xpf netqmail-1.06.tar && \
+	tar xpf netqmail-1.06.tar 
 
 # Add qmail dir
 RUN mkdir -p /var/qmail
