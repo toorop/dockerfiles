@@ -1,4 +1,4 @@
-# qmail
+# qmail vintage
 #
 # VERSION               0.0.1
 
@@ -12,9 +12,9 @@ RUN apt-get update
 RUN apt-get install -y wget build-essential
 
 # daemontools
-RUN mkdir -p /package
-RUN chmod 1755 /package
-RUN cd /package && \
+RUN mkdir -p /package && \
+	chmod 1755 /package && \
+	cd /package && \
 	wget http://cr.yp.to/daemontools/daemontools-0.76.tar.gz && \
 	gunzip daemontools-0.76.tar && \
 	tar -xpf daemontools-0.76.tar && \
@@ -24,63 +24,68 @@ RUN cd /package && \
 	package/install
 
 # ucspi-tcp
+RUN cd /usr/local/src && \
+	wget ucspi-tcp-0.88.tar.gz && \
+	gunzip ucspi-tcp-0.88.tar && \
+    tar -xf ucspi-tcp-0.88.tar && \
+    cd ucspi-tcp-0.88 && \
 
 
 # Get qmail src
-RUN cd /usr/local/src/
-RUN wget http://www.qmail.org/netqmail-1.06.tar.gz
-RUN gunzip netqmail-1.06.tar.gz
-RUN tar xpf netqmail-1.06.tar
+RUN cd /usr/local/src/ && \
+	wget http://www.qmail.org/netqmail-1.06.tar.gz && \
+	gunzip netqmail-1.06.tar.gz && \
+	tar xpf netqmail-1.06.tar && \
 
 # Add qmail dir
 RUN mkdir -p /var/qmail
 
 # Add user
-RUN groupadd nofiles
-RUN useradd -g nofiles -d /var/qmail/alias alias
-RUN useradd -g nofiles -d /var/qmail qmaild
-RUN useradd -g nofiles -d /var/qmail qmaill
-RUN useradd -g nofiles -d /var/qmail qmailp
-RUN groupadd qmail
-RUN useradd -g qmail -d /var/qmail qmailq
-RUN useradd -g qmail -d /var/qmail qmailr
-RUN useradd -g qmail -d /var/qmail qmails
+RUN groupadd nofiles && \
+	useradd -g nofiles -d /var/qmail/alias alias && \
+	useradd -g nofiles -d /var/qmail qmaild && \
+	useradd -g nofiles -d /var/qmail qmaill && \
+	useradd -g nofiles -d /var/qmail qmailp && \
+	groupadd qmail && \
+	useradd -g qmail -d /var/qmail qmailq && \
+	useradd -g qmail -d /var/qmail qmailr && \
+	useradd -g qmail -d /var/qmail qmails 
 
 # It's compile time
-RUN cd /usr/local/src/netqmail-1.06
-RUN make setup check
-RUN ./config
+RUN cd /usr/local/src/netqmail-1.06 && \
+	make setup check && \
+	./config 
 
 # Main rc script
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail.rc.sh -O /var/qmail/rc 
-RUN chmod 755 /var/qmail/rc;
-RUN mkdir /var/log/qmail;
-RUN echo ./Mailbox >/var/qmail/control/defaultdelivery;
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail.rc.sh -O /var/qmail/rc && \
+	chmod 755 /var/qmail/rc && \
+	mkdir /var/log/qmail && \
+	echo ./Mailbox >/var/qmail/control/defaultdelivery
 
 # qmailctl
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmailctl.sh -O /var/qmail/bin/qmailctl
-RUN chmod 755 /var/qmail/bin/qmailctl
-RUN ln -s /var/qmail/bin/qmailctl /usr/bin
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmailctl.sh -O /var/qmail/bin/qmailctl && \
+	chmod 755 /var/qmail/bin/qmailctl && \
+	ln -s /var/qmail/bin/qmailctl /usr/bin
 
 # Log paths
 RUN mkdir -p /var/qmail/supervise/qmail-send/log
 RUN mkdir -p /var/qmail/supervise/qmail-smtpd/log
 
 # qmail-send
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-send.run.sh -O /var/qmail/supervise/qmail-send/run
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-send.log.run.sh -O /var/qmail/supervise/qmail-send/log/run
-RUN chmod 755 /var/qmail/supervise/qmail-send/run
-RUN chmod 755 /var/qmail/supervise/qmail-send/log/run
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-send.run.sh -O /var/qmail/supervise/qmail-send/run && \
+		chmod 755 /var/qmail/supervise/qmail-send/run
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-send.log.run.sh -O /var/qmail/supervise/qmail-send/log/run && \
+	chmod 755 /var/qmail/supervise/qmail-send/log/run
 
 # qmail-smtpd
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.run.sh -O /var/qmail/supervise/qmail-smtpd/run
-RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.log.run.sh -O /var/qmail/supervise/qmail-smtpd/log/run
-RUN chmod 755 /var/qmail/supervise/qmail-smtpd/run
-RUN chmod 755 /var/qmail/supervise/qmail-smtpd/log/run
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.run.sh -O /var/qmail/supervise/qmail-smtpd/run && \
+	chmod 755 /var/qmail/supervise/qmail-smtpd/run
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.log.run.sh -O /var/qmail/supervise/qmail-smtpd/log/run && \
+	RUN chmod 755 /var/qmail/supervise/qmail-smtpd/log/run
 
-RUN mkdir -p /var/log/qmail/qmail-smtpd
-RUN mkdir -p /var/log/qmail/qmail-send
-RUN chown qmaill /var/log/qmail/qmail-send /var/log/qmail/qmail-smtpd
+RUN mkdir -p /var/log/qmail/qmail-smtpd && \
+	mkdir -p /var/log/qmail/qmail-send && \
+	chown qmaill /var/log/qmail/qmail-send /var/log/qmail/qmail-smtpd
 
 
 # control
@@ -88,8 +93,8 @@ RUN echo 20 > /var/qmail/control/concurrencyincoming
 RUN chmod 644 /var/qmail/control/concurrencyincoming
 
 # RELAYCLIENT
-RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp
-RUN qmailctl cdb
+RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp && \
+	qmailctl cdb
 
 # Sendmail compatibility
 RUN ln -s /var/qmail/bin/sendmail /usr/lib
