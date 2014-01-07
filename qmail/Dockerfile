@@ -14,7 +14,7 @@ RUN ln -s /bin/true /sbin/initctl
 
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential groff-base unbound
+RUN apt-get install -y wget build-essential groff-base unbound openssh-server
 
 # daemontools
 RUN mkdir -p /package && \
@@ -108,5 +108,5 @@ RUN ln -s /var/qmail/bin/sendmail /usr/sbin
 # Link to svscan
 RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
 
-EXPOSE 25
+EXPOSE 25 22
 
