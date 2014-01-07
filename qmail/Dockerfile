@@ -9,7 +9,20 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get install -y ucspi-tcp daemontools daemontools-run wget gunzip  build-essentials
+RUN apt-get install -y ucspi-tcp wget build-essentials
+
+# daemontools
+RUN mkdir -p /package
+RUN chmod 1755 /package
+RUN cd /package
+RUN wget http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
+RUN gunzip daemontools-0.76.tar
+RUN tar -xpf daemontools-0.76.tar
+RUN rm -f daemontools-0.76.tar
+RUN cd admin/daemontools-0.76
+RUN package/install
+
+
 
 # Get qmail src
 RUN cd /usr/local/src/
