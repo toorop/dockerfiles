@@ -9,7 +9,7 @@ MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 
-RUN apt-get install -y apt-get install ucspi-tcp daemontools daemontools-run wget
+RUN apt-get install -y ucspi-tcp daemontools daemontools-run wget
 
 # Get qmail src
 RUN cd /usr/local/src/
@@ -83,5 +83,5 @@ RUN ln -s /var/qmail/bin/sendmail /usr/sbin
 # Link to svscan
 RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /etc/service
 
-# Launch svs
+EXPOSE 25
 
