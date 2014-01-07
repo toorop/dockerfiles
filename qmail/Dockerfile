@@ -81,7 +81,7 @@ RUN wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master
 RUN wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.run.sh -O /var/qmail/supervise/qmail-smtpd/run && \
 	chmod 755 /var/qmail/supervise/qmail-smtpd/run
 RUN wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail-smtpd.log.run.sh -O /var/qmail/supervise/qmail-smtpd/log/run && \
-	RUN chmod 755 /var/qmail/supervise/qmail-smtpd/log/run
+	chmod 755 /var/qmail/supervise/qmail-smtpd/log/run
 
 RUN mkdir -p /var/log/qmail/qmail-smtpd && \
 	mkdir -p /var/log/qmail/qmail-send && \
