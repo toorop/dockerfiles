@@ -14,7 +14,7 @@ RUN ln -s /bin/true /sbin/initctl
 
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential groff-base unbound openssh-server
+RUN apt-get install -y wget build-essential groff-base unbound openssh-server nano
 
 # sshd
 RUN mkdir -p /var/run/sshd
@@ -37,6 +37,7 @@ RUN cd /usr/local/src && \
 	gunzip ucspi-tcp-0.88.tar && \
     tar -xf ucspi-tcp-0.88.tar && \
     cd ucspi-tcp-0.88 && \
+    sed 's/gcc -O2/gcc -O2 -include \/usr\/include\/errno.h/g' /usr/local/src/ucspi-tcp-0.88/conf-cc > /tmp/conf-cc && mv /tmp/conf-cc /usr/local/src/ucspi-tcp-0.88/conf-cc && \
     make && \
     make setup check 
 
