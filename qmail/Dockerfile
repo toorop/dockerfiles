@@ -16,6 +16,9 @@ RUN apt-get update
 
 RUN apt-get install -y wget build-essential groff-base unbound openssh-server
 
+# sshd
+RUN mkdir -p /var/run/sshd
+
 # daemontools
 RUN mkdir -p /package && \
 	chmod 1755 /package && \
@@ -115,6 +118,9 @@ RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	touch /root/.ssh/authorized_keys2 && \
 	cat /tmp/tmp.key >> /root/.ssh/authorized_keys2 && \
 	rm /tmp/tmp.key 
+
+# Start
+RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/start.sh -O /root/start.sh
 
 EXPOSE 25 22
 
