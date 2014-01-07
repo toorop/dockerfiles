@@ -102,7 +102,7 @@ RUN mkdir -p /var/log/qmail/qmail-smtpd && \
 # control
 RUN echo 20 > /var/qmail/control/concurrencyincoming
 RUN chmod 644 /var/qmail/control/concurrencyincoming
-RUN cat /etc/hostname >> /var/qmail/control/me
+RUN cat /etc/hostname > /var/qmail/control/me
 
 # RELAYCLIENT
 RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp && \
