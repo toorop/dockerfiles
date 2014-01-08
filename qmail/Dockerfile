@@ -123,8 +123,7 @@ RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp && \
 	qmailctl cdb
 
 # Sendmail compatibility
-RUN ln -s /var/qmail/bin/sendmail /usr/lib
-RUN ln -s /var/qmail/bin/sendmail /usr/sbin
+RUN ln -s /var/qmail/bin/sendmail /usr/lib && ln -s /var/qmail/bin/sendmail /usr/sbin
 
 # Link to svscan
 RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
