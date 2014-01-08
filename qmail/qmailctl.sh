@@ -11,13 +11,13 @@ NOFILESGID=`id -g qmaild`
 case "$1" in
   start)
     echo "Starting qmail"
-    if svok /etc/service/qmail-send ; then
-      svc -u /etc/service/qmail-send /etc/service/qmail-send/log
+    if svok /service/qmail-send ; then
+      svc -u /service/qmail-send /service/qmail-send/log
     else
       echo "qmail-send supervise not running"
     fi
-    if svok /etc/service/qmail-smtpd ; then
-      svc -u /etc/service/qmail-smtpd /etc/service/qmail-smtpd/log
+    if svok /service/qmail-smtpd ; then
+      svc -u /service/qmail-smtpd /service/qmail-smtpd/log
     else
       echo "qmail-smtpd supervise not running"
     fi
@@ -28,24 +28,24 @@ case "$1" in
   stop)
     echo "Stopping qmail..."
     echo "  qmail-smtpd"
-    svc -d /etc/service/qmail-smtpd /etc/service/qmail-smtpd/log
+    svc -d /service/qmail-smtpd /service/qmail-smtpd/log
     echo "  qmail-send"
-    svc -d /etc/service/qmail-send /etc/service/qmail-send/log
+    svc -d /service/qmail-send /service/qmail-send/log
     if [ -f /var/lock/subsys/qmail ]; then
       rm /var/lock/subsys/qmail
     fi
     ;;
   stat)
-    svstat /etc/service/qmail-send
-    svstat /etc/service/qmail-send/log
-    svstat /etc/service/qmail-smtpd
-    svstat /etc/service/qmail-smtpd/log
+    svstat /service/qmail-send
+    svstat /service/qmail-send/log
+    svstat /service/qmail-smtpd
+    svstat /service/qmail-smtpd/log
     qmail-qstat
     ;;
   doqueue|alrm|flush)
     echo "Flushing timeout table and sending ALRM signal to qmail-send."
     /var/qmail/bin/qmail-tcpok
-    svc -a /etc/service/qmail-send
+    svc -a /service/qmail-send
     ;;
   queue)
     qmail-qstat
@@ -53,28 +53,28 @@ case "$1" in
     ;;
   reload|hup)
     echo "Sending HUP signal to qmail-send."
-    svc -h /etc/service/qmail-send
+    svc -h /service/qmail-send
     ;;
   pause)
     echo "Pausing qmail-send"
-    svc -p /etc/service/qmail-send
+    svc -p /service/qmail-send
     echo "Pausing qmail-smtpd"
-    svc -p /etc/service/qmail-smtpd
+    svc -p /service/qmail-smtpd
     ;;
   cont)
     echo "Continuing qmail-send"
-    svc -c /etc/service/qmail-send
+    svc -c /service/qmail-send
     echo "Continuing qmail-smtpd"
-    svc -c /etc/service/qmail-smtpd
+    svc -c /service/qmail-smtpd
     ;;
   restart)
     echo "Restarting qmail:"
     echo "* Stopping qmail-smtpd."
-    svc -d /etc/service/qmail-smtpd /etc/service/qmail-smtpd/log
+    svc -d /service/qmail-smtpd /service/qmail-smtpd/log
     echo "* Sending qmail-send SIGTERM and restarting."
-    svc -t /etc/service/qmail-send /etc/service/qmail-send/log
+    svc -t /service/qmail-send /service/qmail-send/log
     echo "* Restarting qmail-smtpd."
-    svc -u /etc/service/qmail-smtpd /etc/service/qmail-smtpd/log
+    svc -u /service/qmail-smtpd /service/qmail-smtpd/log
     ;;
   cdb)
     tcprules /etc/tcp.smtp.cdb /etc/tcp.smtp.tmp < /etc/tcp.smtp
