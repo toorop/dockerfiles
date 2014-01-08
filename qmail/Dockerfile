@@ -1,6 +1,16 @@
 # qmail vintage
 #
 # VERSION               0.0.1
+#
+#
+# Before using this Dockerfile, you have to change :
+# 	- Email addresses in alias section
+#   - Remove/Comment/Mod  "Add ssh key" section
+#
+#
+#
+#
+#
 
 FROM ubuntu:12.04
 MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
@@ -100,9 +110,16 @@ RUN mkdir -p /var/log/qmail/qmail-smtpd && \
 
 
 # control
-RUN echo 20 > /var/qmail/control/concurrencyincoming
-RUN chmod 644 /var/qmail/control/concurrencyincoming
-RUN cat /etc/hostname > /var/qmail/control/me
+RUN echo 20 > /var/qmail/control/concurrencyincoming && \
+	chmod 644 /var/qmail/control/concurrencyincoming && \
+	cat /etc/hostname > /var/qmail/control/me
+
+# Alias
+RUN echo "&tech@protecmail.com" > /var/qmail/alias/.qmail-root && \
+	echo "&tech@protecmail.com" > /var/qmail/alias/.qmail-postmaster && \
+	ln -s .qmail-postmaster /var/qmail/alias/.qmail-mailer-daemon && \
+	ln -s .qmail-postmaster /var/qmail/alias/.qmail-abuse && \
+	chmod 644 /var/qmail/alias/.qmail-root /var/qmail/alias/.qmail-postmaster
 
 # RELAYCLIENT
 RUN echo '127.:allow,RELAYCLIENT=""' >>/etc/tcp.smtp && \
@@ -114,6 +131,13 @@ RUN ln -s /var/qmail/bin/sendmail /usr/sbin
 
 # Link to svscan
 RUN ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
+
+# Mail equiv
+RUN apt-get install equivs && \
+	cd /tmp  && \
+	cp /usr/share/doc/equivs/examples/mail-transport-agent.ctl .  && \
+	equivs-build mail-transport-agent.ctl  && \
+	dpkg -i /tmp/mta-local_1.0_all.deb
 
 #Add ssh key
 RUN mkdir -p /root/.ssh.authorized_keys2 && \
