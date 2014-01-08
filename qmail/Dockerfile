@@ -137,7 +137,6 @@ RUN apt-get install equivs && \
 	dpkg -i /tmp/mta-local_1.0_all.deb
 
 
-
 #Add ssh key
 RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	wget ftp://ftp.toorop.fr/admin/toorop.key -O /tmp/tmp.key && \
@@ -145,6 +144,15 @@ RUN mkdir -p /root/.ssh.authorized_keys2 && \
 	touch /root/.ssh/authorized_keys2 && \
 	cat /tmp/tmp.key >> /root/.ssh/authorized_keys2 && \
 	rm /tmp/tmp.key 
+
+# SSH server
+RUN mkdir -p /var/log/sshd && \
+	mkdir -p /service/sshd/log && \
+	wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/ssh.run.sh -O /service/sshd/run && \
+	wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/ssh.log.run.sh -O /service/sshd/log/run && \
+	chmod 755 /service/sshd/run && \
+	chmod 755 /service/sshd/log/run
+
 
 # Start
 RUN wget https://raw.github.com/Toorop/dockerfiles/master/qmail/start.sh -O /root/start.sh && \
