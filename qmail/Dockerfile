@@ -7,10 +7,7 @@
 # 	- Email addresses in alias section
 #   - Remove/Comment/Mod  "Add ssh key" section
 #
-#
-#
-#
-#
+
 
 FROM ubuntu:12.04
 MAINTAINER Stephane Depierrepont <toorop@toorop.fr>
@@ -24,7 +21,7 @@ RUN ln -s /bin/true /sbin/initctl
 
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential groff-base unbound openssh-server nano
+RUN apt-get install -y wget build-essential groff-base unbound openssh-server nano bsd-mailx
 
 # sshd
 RUN mkdir -p /var/run/sshd
@@ -138,6 +135,8 @@ RUN apt-get install equivs && \
 	cp /usr/share/doc/equivs/examples/mail-transport-agent.ctl .  && \
 	equivs-build mail-transport-agent.ctl  && \
 	dpkg -i /tmp/mta-local_1.0_all.deb
+
+
 
 #Add ssh key
 RUN mkdir -p /root/.ssh.authorized_keys2 && \
