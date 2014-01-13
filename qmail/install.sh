@@ -10,7 +10,16 @@
 #   - Remove/Comment/Mod  "Add ssh key" section
 #
 
-apt-get update && apt-get install -y wget build-essential groff-base unbound openssh-server nano bsd-mailx
+apt-get update 
+
+# Mail equiv
+apt-get install -y equivs && \
+	cd /tmp  && \
+	cp /usr/share/doc/equivs/examples/mail-transport-agent.ctl .  && \
+	equivs-build mail-transport-agent.ctl  && \
+	dpkg -i /tmp/mta-local_1.0_all.deb
+
+apt-get install -y wget build-essential groff-base unbound bsd-mailx python-mysqldb
 
 
 # daemontools
@@ -115,12 +124,7 @@ ln -s /var/qmail/bin/sendmail /usr/lib && ln -s /var/qmail/bin/sendmail /usr/sbi
 # Link to svscan
 ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
 
-# Mail equiv
-apt-get install equivs && \
-	cd /tmp  && \
-	cp /usr/share/doc/equivs/examples/mail-transport-agent.ctl .  && \
-	equivs-build mail-transport-agent.ctl  && \
-	dpkg -i /tmp/mta-local_1.0_all.deb
+
 
 
 #Add ssh key

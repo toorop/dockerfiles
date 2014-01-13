@@ -21,7 +21,7 @@ RUN ln -s /bin/true /sbin/initctl
 
 RUN apt-get update
 
-RUN apt-get install -y wget build-essential groff-base unbound openssh-server nano bsd-mailx
+RUN apt-get install -y wget build-essential groff-base unbound openssh-server nano bsd-mailx python-mysqldb
 
 # sshd
 RUN mkdir -p /var/run/sshd
