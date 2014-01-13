@@ -19,7 +19,9 @@ apt-get install -y equivs && \
 	equivs-build mail-transport-agent.ctl  && \
 	dpkg -i /tmp/mta-local_1.0_all.deb
 
-apt-get install -y wget build-essential groff-base unbound bsd-mailx python-mysqldb
+apt-get install -y wget build-essential groff-base unbound bsd-mailx python-mysqldb ntp
+
+service ntp start
 
 
 # daemontools
