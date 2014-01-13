@@ -124,6 +124,9 @@ ln -s /var/qmail/bin/sendmail /usr/lib && ln -s /var/qmail/bin/sendmail /usr/sbi
 # Link to svscan
 ln -s /var/qmail/supervise/qmail-send /var/qmail/supervise/qmail-smtpd /service
 
+# svscanboot startup
+wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/svscanboot.conf -O /etc/init/svscanboot.conf && \
+	chmod 755 /etc/init/svscanboot.conf
 
 
 
