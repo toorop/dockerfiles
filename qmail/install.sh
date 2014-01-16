@@ -19,7 +19,7 @@ apt-get install -y equivs && \
 	equivs-build mail-transport-agent.ctl  && \
 	dpkg -i /tmp/mta-local_1.0_all.deb
 
-apt-get install -y wget build-essential groff-base unbound bsd-mailx python-mysqldb ntp
+apt-get install -y wget build-essential groff-base unbound bsd-mailx python-mysqldb ntp libssl-dev
 
 service ntp start
 
@@ -67,10 +67,36 @@ groupadd nofiles && \
 	useradd -g qmail -d /var/qmail qmailr && \
 	useradd -g qmail -d /var/qmail qmails 
 
+# Patches
+# DNS
+cd /usr/local/src/netqmail-1.06 && \
+  	mkdir patches && \
+  	wget --no-check-certificate https://raw2.github.com/Toorop/dockerfiles/master/qmail/large-dns.patch -O patches/cname.patch && \
+	patch -p1 < patches/cname.patch
+
+# Big concurrency
+cd /usr/local/src/netqmail-1.06 && \
+  	wget --no-check-certificate https://raw2.github.com/Toorop/dockerfiles/master/qmail/big-concurrency.patch -O patches/big-concurrency.patch && \
+	patch -p1 < patches/big-concurrency.patch
+
+# Big Todo
+cd /usr/local/src/netqmail-1.06 && \
+  	wget --no-check-certificate https://raw2.github.com/Toorop/dockerfiles/master/qmail/big-todo.patch -O patches/big-todo.patch && \
+	patch -p1 < patches/big-todo.patch
+
+# TLS + SMTP Auth
+cd /usr/local/src/netqmail-1.06 && \
+  	wget --no-check-certificate https://raw2.github.com/Toorop/dockerfiles/master/qmail/tls-smtpauth.patch -O patches/tls-smtpauth.patch && \
+	patch -p0 < patches/tls-smtpauth.patch
+
+
 # It's compile time baby
 cd /usr/local/src/netqmail-1.06 && \
 	make setup check && \
-	./config-fast 
+	./config-fast  && \
+	make cert  && \
+	make tmprsadh  && \
+
 
 # Main rc script
 wget --no-check-certificate https://raw.github.com/Toorop/dockerfiles/master/qmail/qmail.rc.sh -O /var/qmail/rc && \
@@ -107,7 +133,10 @@ mkdir -p /var/log/qmail/qmail-smtpd && \
 # control
 echo 20 > /var/qmail/control/concurrencyincoming && \
 	chmod 644 /var/qmail/control/concurrencyincoming && \
-	cat /etc/hostname > /var/qmail/control/me
+	cat /etc/hostname > /var/qmail/control/me && \
+	echo 60 > /var/qmail/control/timeoutremote && \
+	echo 60 > /var/qmail/control/timeoutsmtpd
+
 
 # Alias
 echo "&tech@protecmail.com" > /var/qmail/alias/.qmail-root && \
