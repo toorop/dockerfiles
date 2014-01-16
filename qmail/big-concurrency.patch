@@ -17,7 +17,7 @@ diff -u qmail-1.03.orig/conf-spawn qmail-1.03/conf-spawn
 +++ qmail-1.03/conf-spawn	Tue Jul 27 13:32:30 1999
 @@ -1,4 +1,4 @@
 -120
-+1000
++500
  
  This is a silent concurrency limit. You can't set it above 255. On some
  systems you can't set it above 125. qmail will refuse to compile if the
