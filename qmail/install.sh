@@ -95,7 +95,7 @@ cd /usr/local/src/netqmail-1.06 && \
 	make setup check && \
 	./config-fast  && \
 	make cert  && \
-	make tmprsadh  && \
+	make tmprsadh  
 
 
 # Main rc script
@@ -135,7 +135,8 @@ echo 20 > /var/qmail/control/concurrencyincoming && \
 	chmod 644 /var/qmail/control/concurrencyincoming && \
 	cat /etc/hostname > /var/qmail/control/me && \
 	echo 60 > /var/qmail/control/timeoutremote && \
-	echo 60 > /var/qmail/control/timeoutsmtpd
+	echo 60 > /var/qmail/control/timeoutsmtpd && \
+	echo 604800 > /var/qmail/control/queuelifetime
 
 
 # Alias
