@@ -17,6 +17,6 @@ if [ ! -f /var/qmail/control/rcpthosts ]; then
     exit 1
 fi
 
-exec /usr/local/bin/softlimit -m 10000000 \
+exec /usr/local/bin/softlimit -m 100000000 \
     /usr/local/bin/tcpserver -v -R -l "$LOCAL" -x /etc/tcp.smtp.cdb -c "$MAXSMTPD" \
         -u "$QMAILDUID" -g "$NOFILESGID" 0 smtp /var/qmail/bin/qmail-smtpd 2>&1
